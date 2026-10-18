@@ -1,3 +1,4 @@
 class Globals{
-    static points = 0
+    static phaseTime = 90
+    //add level count later to base spawn times on
 }

@@ -2,6 +2,10 @@
 
 /**
  * The base class for all game objects in our games
+ * 
+ * Compare to the Unity GameObject: https://docs.unity3d.com/6000.5/Documentation/ScriptReference/GameObject.html
+ * Compare to the Unreal AActor: https://dev.epicgames.com/documentation/en-us/unreal-engine/API/Runtime/Engine/GameFramework/AActor/?application_version=5.5
+ * Compare to the Godot Node2D: https://docs.godotengine.org/en/4.4/classes/class_node2d.html
  */
 class GameObject{
     /**
@@ -21,6 +25,8 @@ class GameObject{
 
     tags = []
 
+    layer = "default"
+
     /** 
      * @returns{Transform} The transform
     */
@@ -33,10 +39,11 @@ class GameObject{
      * 
      * @param {String} name The name of the game object
      */
-    constructor(name, tags = []){
+    constructor(name, tags = [], layer = 'default'){
         this.addComponent(new Transform())
         this.name = name
         this.tags = tags
+        this.layer = layer
     }
 
     /**
@@ -48,6 +55,12 @@ class GameObject{
         Object.assign(component, parameters)
         this.components.push(component)
         component.gameObject = this
+    }
+
+    broadcastMessage(message, args = []){
+        for(const component of this.components){
+            component[message]?.(...args)
+        }
     }
 
     /**
@@ -79,10 +92,14 @@ class GameObject{
      * @param {CanvasRenderingContext2D} ctx The context to draw to
      */
     draw(ctx){
+
+        ctx.save()
+        ctx.setTransform(ctx.getTransform().multiply(this.transform.getWorldMatrix()))
         for(const component of this.components){
             // @ts-expect-error
             component.draw?.(ctx)
         }
+        ctx.restore()
     }
 
     /**
@@ -114,5 +131,9 @@ class GameObject{
 
     static findGameObjectsWithTag(tag){
         return SceneManager.currentScene.gameObjects.filter(go=>go.tags.includes(tag) )
+    }
+
+    static findGameObjectsByType(type){
+        return SceneManager.currentScene.gameObjects.filter(go=>go.components.find(c=>c instanceof type))
     }
 }

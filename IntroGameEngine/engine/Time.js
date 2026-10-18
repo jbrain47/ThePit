@@ -2,6 +2,10 @@
 
 /**
  * Class used for tracking time
+ * 
+ * Compare to the Unity Time: https://docs.unity3d.com/6000.5/Documentation/ScriptReference/Time.html
+ * Compare to the Unreal FApp: https://dev.epicgames.com/documentation/en-us/unreal-engine/API/Runtime/Core/Misc/FApp/?application_version=5.5
+ * Compare to the Godot Time: https://docs.godotengine.org/en/4.4/classes/class_time.html
  */
 class Time{
     /**

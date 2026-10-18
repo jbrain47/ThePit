@@ -1,5 +1,9 @@
 class PointsController extends Component{
     update(){
-        this.gameObject.getComponent(TextLabel).text = Globals.points + " points"
+        Globals.phaseTime -= Time.deltaTime
+
+        let seconds = Math.floor(Globals.phaseTime)
+
+        this.gameObject.getComponent(TextLabel).text = seconds + " seconds"
     }
 }

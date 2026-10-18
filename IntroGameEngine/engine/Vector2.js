@@ -4,7 +4,7 @@
  * Class that defines a 2D point
  * 
  * Compare to the Unity Vector2: https://docs.unity3d.com/6000.5/Documentation/ScriptReference/Vector2.html
- * Compare to the Unreal Vector2D: https://dev.epicgames.com/documentation/en-us/unreal-engine/python-api/class/Vector2D?application_version=4.27
+ * Compare to the Unreal FVector2D: https://dev.epicgames.com/documentation/en-us/unreal-engine/API/Runtime/Core/Math/FVector2D/?application_version=5.5
  * Compare to the Godot Vector2: https://docs.godotengine.org/en/4.4/classes/class_vector2.html
  */
 class Vector2{

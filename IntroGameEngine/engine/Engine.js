@@ -5,6 +5,10 @@
  * 
  * This contains all the code that would be used by all games
  * The API for this class is primarily based on the Unity API
+ * 
+ * Compare to the Unreal UEngine: https://dev.epicgames.com/documentation/en-us/unreal-engine/API/Runtime/Engine/Engine/UEngine/?application_version=5.5
+ * Compare to the Godot Engine: https://docs.godotengine.org/en/4.4/classes/class_engine.html
+ * Compare to the Godot MainLoop: https://docs.godotengine.org/en/4.4/classes/class_mainloop.html
  */
 class Engine {
     /**
@@ -19,11 +23,13 @@ class Engine {
      */
     static ctx
 
+    static layers = ["default", "UI"]
+
     
    /**
     * 
     */
-    static start(nextScene) {
+    static start(nextScene, settings) {
         //Grab the canvas element and put it into an element named canvas
         Engine.canvas = document.querySelector("#canv")
 
@@ -39,7 +45,17 @@ class Engine {
         //Tell javascript that we want to listen to keyup events
         addEventListener("keyup", Input.keyup)
 
+        addEventListener("mousedown", Input.mousedown)
+
+        addEventListener("mouseup", Input.mouseup)
+
+        addEventListener("mousemove", Input.mousemove)
+
         SceneManager.nextScene = nextScene
+
+        if(settings){
+            Engine.layers = settings.layers
+        }
 
         //Tell the browser to call our game loop the next time the browser can.
         requestAnimationFrame(Engine.gameLoop)
@@ -56,6 +72,7 @@ class Engine {
         Engine.draw()
 
         Time.update()
+        Input.update()
 
         //...then call the game loop again the next time the browser can
         requestAnimationFrame(Engine.gameLoop)
